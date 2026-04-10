@@ -9,6 +9,7 @@ import {
   togglePause,
 } from "./snakeLogic.js";
 const biteSound = new Audio("/welcome-to-jungle-clean/assets/bite-crunch.wav");
+let lastPlayedScore = 0;
 
 const boardElement = document.querySelector("#game-board");
 const scoreElement = document.querySelector("#score");
@@ -358,9 +359,17 @@ function render() {
     }`;
   }
 
-  scoreElement.textContent = String(state.score);
+  if (state.score > lastPlayedScore) {
   biteSound.currentTime = 0;
-biteSound.play();
+  biteSound.play().catch(() => {});
+  lastPlayedScore = state.score;
+}
+
+if (state.score === 0) {
+  lastPlayedScore = 0;
+}
+
+scoreElement.textContent = String(state.score);
   levelElement.textContent = String(getLevel(state.score));
   highScoreElement.textContent = String(highScore);
   zoneNameElement.textContent = getThemeForLevel(getLevel(state.score)).zoneName;
