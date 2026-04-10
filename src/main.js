@@ -359,6 +359,8 @@ function render() {
   }
 
   scoreElement.textContent = String(state.score);
+  biteSound.currentTime = 0;
+biteSound.play();
   levelElement.textContent = String(getLevel(state.score));
   highScoreElement.textContent = String(highScore);
   zoneNameElement.textContent = getThemeForLevel(getLevel(state.score)).zoneName;
