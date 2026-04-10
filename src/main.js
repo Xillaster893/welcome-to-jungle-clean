@@ -9,6 +9,7 @@ import {
   togglePause,
 } from "./snakeLogic.js";
 const biteSound = new Audio("/welcome-to-jungle-clean/assets/bite-crunch.wav");
+const gameOverSound = new Audio("/welcome-to-jungle-clean/assets/gameover.wav");
 let lastPlayedScore = 0;
 
 const boardElement = document.querySelector("#game-board");
