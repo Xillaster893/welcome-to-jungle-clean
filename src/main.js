@@ -11,6 +11,7 @@ import {
 const biteSound = new Audio("/welcome-to-jungle-clean/assets/bite-crunch.wav");
 const gameOverSound = new Audio("/welcome-to-jungle-clean/assets/gameover.wav");
 let lastPlayedScore = 0;
+let hasPlayedGameOver = false;
 
 const boardElement = document.querySelector("#game-board");
 const scoreElement = document.querySelector("#score");
@@ -368,6 +369,7 @@ function render() {
 
 if (state.score === 0) {
   lastPlayedScore = 0;
+  hasPlayedGameOver = false;
 }
 
 scoreElement.textContent = String(state.score);
@@ -392,6 +394,12 @@ scoreElement.textContent = String(state.score);
   overlayElement.setAttribute("aria-hidden", state.isGameOver ? "false" : "true");
 
   if (state.isGameOver) {
+    if (!hasPlayedGameOver) {
+      gameOverSound.currentTime = 0;
+      gameOverSound.play().catch(() => {});
+      hasPlayedGameOver = true;
+    }
+
     const didClearBoard = state.food === null;
     const isNewHighScore = state.score === highScore && state.score > 0;
     setStatusMessage(didClearBoard
